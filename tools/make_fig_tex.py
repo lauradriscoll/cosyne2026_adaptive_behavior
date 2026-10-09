@@ -83,7 +83,7 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         nodes.append(
             f"    \\node[anchor=north west] at (\\{prefix}X, -\\{prefix}Y) {{%\n"
             f"      \\begin{{subfigure}}[t]{{\\{prefix}W}}%\n"
-            f"        \\panel{{{letter}}}{{\\includegraphics[width=\\linewidth]{{{fig_dir_tex}/panels/{name}.pdf}}}}%\n"
+            f"        \\panel{{{letter}}}{{\\panelgraphic[width=\\linewidth]{{{fig_dir_tex}/panels/{name}.pdf}}}}%\n"
             f"        \\phantomsubcaption\\label{{{label}}}%\n"
             f"      \\end{{subfigure}}}};"
         )

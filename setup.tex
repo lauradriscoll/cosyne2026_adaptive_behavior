@@ -12,3 +12,11 @@
           font=\sffamily\bfseries\large] at (panelimg.north west) {#1};
   \end{tikzpicture}%
 }
+
+% Include a panel PDF if it exists; otherwise draw a gray placeholder box so the
+% document still compiles (e.g. on Overleaf before panels have been generated).
+\newcommand{\panelgraphic}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][0.6\linewidth][c]{0.95\linewidth}{\centering\small\ttfamily
+      \detokenize{#2}\missing}}}%
+}
