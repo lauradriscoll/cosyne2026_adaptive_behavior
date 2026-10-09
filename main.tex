@@ -1,72 +1,72 @@
-\documentclass[12pt,letterpaper]{article}
+\documentclass[11pt]{article}
 
-% ---- Layout: margins must be >= 0.5in; body font >= 12pt ----
-\usepackage[margin=0.75in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{microtype}
+\usepackage[margin=1in, top=0.75in]{geometry}
+\usepackage{times}
 \usepackage{graphicx}
-\usepackage{amsmath,amssymb}
-\usepackage[font=footnotesize,labelfont=bf,skip=3pt]{caption} % 10-pt captions
-\usepackage[numbers,sort&compress]{natbib}
-\usepackage{enumitem}
-\usepackage[colorlinks=false,hidelinks,
-            pdfauthor={},pdfsubject={},pdfkeywords={},pdfcreator={},
-            pdftitle={}]{hyperref}  % blank metadata for double-blind review
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{cleveref}
 
-\pagestyle{empty}                 % no headers, footers, or page numbers
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{4pt}
-\setlength{\bibsep}{0pt}
-\renewcommand{\bibfont}{\footnotesize}  % 10-pt references
+\input{setup.tex}
+
+\graphicspath{{figures/}}
+
+\title{\textbf{Adaptive behavior in a dynamic patch foraging environment}}
+\author{T. Oña-Jodar$^{1}$, Author Two$^{1}$\\
+{\small $^{1}$Neural Dynamics, Allen Institute, Seattle WA}}
+\date{}
 
 \begin{document}
+\maketitle
+\thispagestyle{empty}
 
-% ---- TITLE: <=100 characters including spaces, sentence case. NO authors/affiliations ----
-\begin{center}
-  {\Large\bfseries Your title goes here in sentence case, at most 100 characters}
-\end{center}
-\vspace{-6pt}
+% ---- Abstract text ----
+\paragraph{Summary.}
+Foraging requires integrating sensory cues, reward history, and environmental context to guide adaptive decisions.
+We developed a head-fixed virtual reality patch foraging task in which mice traverse a linear track and make self-initiated decisions to harvest probabilistic water rewards at odor-cued sites (Fig.~1A--C).
+Patches deplete exponentially with harvesting, and at each odor site mice decide whether to stop and exploit or run and leave the patch, yielding rich behavioral sequences including short visits, long visits, and skipped patches (Fig.~1D).
 
-% ---- 300-WORD SUMMARY (this is the only text published in the program) ----
-\textbf{Summary.}
-State the central question and why it matters. Describe your approach in one or two
-sentences. Report the primary findings, emphasizing significance, generality, novelty,
-and relevance to the Cosyne audience. Close with a sentence on broader impact, e.g.,
-what the result offers experimentalists if the work is computational, or theorists if
-the work is experimental. Define all acronyms at first use. Keep this to 300 words
-or fewer.
+Naive mice rapidly acquired the task, learning to use odor identity and reward outcomes to guide patch-leaving decisions.
+Mice consistently stopped at rewarded patch types and ran through the unrewarded patch (Fig.~1B), and velocity profiles at odor onset differed systematically by patch type (Fig.~1C).
+Within rewarded patches, mice were more likely to leave after consecutive reward omissions in the low-value patch than the high-value patch (Fig.~1F), demonstrating odor-cued expectations about patch quality.
+On average, mice left both rewarded patch types at equivalent reward probabilities, consistent with the Marginal Value Theorem (MVT), but inconsistent with simpler heuristics such as reward counting or win-stay/lose-shift strategies.
 
-% ---- ADDITIONAL DETAIL (seen only by reviewers and organizers) ----
-\textbf{Background and question.}
-Define the question and why it is important and unsolved. If you cite your own prior
-work, write it in the third person: ``Author et al.~\cite{ref1} showed\ldots'', never
-``our previous work''.
+To capture how mice estimate and use a global reward rate, we formulated a Bayesian MVT model (Fig.~2C) in which animals maintain patch-type-specific beliefs initialized from odor-based priors and updated by within-patch outcomes.
+The model reproduces the key behavioral signature: reward probability at leaving is matched across patch types (n.s.), while all other metrics differ significantly (Fig.~2D--E).
+Trial-to-trial variability in patch-leaving arises naturally from posterior uncertainty.
+Manipulations of inter-patch travel distance shifted patch-leaving thresholds in the directions predicted by MVT (Fig.~2F--G).
+Critically, changing reward statistics in one patch type shifted leaving decisions in the other---a cross-patch generalization establishing that mice integrate reward information globally across the environment to guide local patch-leaving decisions.
 
-\textbf{Approach.}
-Describe the methods in enough detail for reviewers to assess the technical content.
-Equations are welcome where useful, e.g.,
-\begin{equation}
-  \tau \frac{d\mathbf{x}}{dt} = -\mathbf{x} + W\,\phi(\mathbf{x}) + \mathbf{u}(t).
-\end{equation}
+This task and behavioral framework establish a foundation for identifying the circuit mechanisms underlying global reward rate estimation in naturalistic foraging.
 
-\textbf{Results.}
-Walk through the main results, referring to the figure(s) below.
+\paragraph{Additional Detail.}
+Continuous behavior decomposed into stereotyped kinematic motifs---identified using hidden Markov models fitted to velocity and respiration---organized across odor sites, patches, and sessions (Fig.~1A--G).
+The stop action in rewarded patches was highly stereotyped across mice, with sharp deceleration upon odor onset followed by sustained stopping and reward collection; patch-leaving decisions showed a characteristic velocity signature that differed between early and late patch departures (Fig.~1E).
+Patch-level choice sequences (Fig.~1A) reveal that mice integrated reward history within patches across the session.
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.75\linewidth]{example-image-a} % replace with your figure
-  \caption{Describe what is shown so that the figure is interpretable on its own.
-           Make sure all text in the figure is legible.}
-\end{figure}
+The Bayesian MVT model (Fig.~2A--C) formalizes how an optimal forager should leave patches given uncertainty about patch quality.
+The agent maintains separate posteriors over reward probability for each patch type, updated after each binary outcome with a forgetting parameter $\delta < 1$ enabling rapid within-patch updating.
+At each odor site, a sample from the current posterior is compared to a running estimate of global reward rate $\bar{R}$; the agent leaves when the sampled local rate falls below $\bar{R}$.
+This Thompson-sampling rule produces stochastic leaving behavior whose variability is inherited from posterior uncertainty.
+The model captures both average behavior (Fig.~2D--E) and session-level shifts in leaving thresholds following reward rate manipulations.
 
-\textbf{Conclusions and significance.}
-Summarize what the results imply for neural systems and why they will interest both
-experimentalists and theorists.
+Three independent manipulations confirm that mice track a global reward rate.
+First, increasing inter-patch travel distance lowered the global reward rate, causing mice to leave patches at lower reward probabilities; shorter distances had the opposite effect (Fig.~2F--G).
+Second, increasing wheel friction during inter-patch travel produced equivalent shifts without affecting within-patch kinematics.
+Third, changing reward probabilities in one patch type shifted leaving thresholds for both patch types---including the unchanged control patch---demonstrating cross-patch generalization of the global rate estimate.
+This signature distinguishes our Bayesian MVT account from purely local threshold rules.
 
-% ---- REFERENCES (10-pt). Anonymize self-citations in the text, not necessarily here ----
-\begin{thebibliography}{9}
-\bibitem{ref1} Author, A., and Author, B. (2025). Title of related paper. \textit{Journal}, 1(2):3--4.
-\end{thebibliography}
+Preliminary electrophysiology recordings reveal structured population dynamics during task performance.
+PCA trajectories separate distinct task epochs (odor onset, stopping, reward delivery) and differ by patch type (Fig.~2H), suggesting that neural state reflects the animal's current foraging context.
+Population-level PSTHs reveal heterogeneous functional cell types, with subpopulations responding preferentially to odor onset, reward outcome, or patch-leaving events (Fig.~2I).
+These early results motivate ongoing multi-regional Neuropixels recordings to identify the circuit mechanisms underlying global reward rate estimation.
+
+% ---- Figure 1 ----
+\input{figures/fig1/fig1.tex}
+
+% ---- Figure 2 ----
+\input{figures/fig2/fig2.tex}
 
 \end{document}
