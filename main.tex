@@ -1,0 +1,72 @@
+\documentclass[12pt,letterpaper]{article}
+
+% ---- Layout: margins must be >= 0.5in; body font >= 12pt ----
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage[font=footnotesize,labelfont=bf,skip=3pt]{caption} % 10-pt captions
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem}
+\usepackage[colorlinks=false,hidelinks,
+            pdfauthor={},pdfsubject={},pdfkeywords={},pdfcreator={},
+            pdftitle={}]{hyperref}  % blank metadata for double-blind review
+
+\pagestyle{empty}                 % no headers, footers, or page numbers
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\bibsep}{0pt}
+\renewcommand{\bibfont}{\footnotesize}  % 10-pt references
+
+\begin{document}
+
+% ---- TITLE: <=100 characters including spaces, sentence case. NO authors/affiliations ----
+\begin{center}
+  {\Large\bfseries Your title goes here in sentence case, at most 100 characters}
+\end{center}
+\vspace{-6pt}
+
+% ---- 300-WORD SUMMARY (this is the only text published in the program) ----
+\textbf{Summary.}
+State the central question and why it matters. Describe your approach in one or two
+sentences. Report the primary findings, emphasizing significance, generality, novelty,
+and relevance to the Cosyne audience. Close with a sentence on broader impact, e.g.,
+what the result offers experimentalists if the work is computational, or theorists if
+the work is experimental. Define all acronyms at first use. Keep this to 300 words
+or fewer.
+
+% ---- ADDITIONAL DETAIL (seen only by reviewers and organizers) ----
+\textbf{Background and question.}
+Define the question and why it is important and unsolved. If you cite your own prior
+work, write it in the third person: ``Author et al.~\cite{ref1} showed\ldots'', never
+``our previous work''.
+
+\textbf{Approach.}
+Describe the methods in enough detail for reviewers to assess the technical content.
+Equations are welcome where useful, e.g.,
+\begin{equation}
+  \tau \frac{d\mathbf{x}}{dt} = -\mathbf{x} + W\,\phi(\mathbf{x}) + \mathbf{u}(t).
+\end{equation}
+
+\textbf{Results.}
+Walk through the main results, referring to the figure(s) below.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\linewidth]{example-image-a} % replace with your figure
+  \caption{Describe what is shown so that the figure is interpretable on its own.
+           Make sure all text in the figure is legible.}
+\end{figure}
+
+\textbf{Conclusions and significance.}
+Summarize what the results imply for neural systems and why they will interest both
+experimentalists and theorists.
+
+% ---- REFERENCES (10-pt). Anonymize self-citations in the text, not necessarily here ----
+\begin{thebibliography}{9}
+\bibitem{ref1} Author, A., and Author, B. (2025). Title of related paper. \textit{Journal}, 1(2):3--4.
+\end{thebibliography}
+
+\end{document}
