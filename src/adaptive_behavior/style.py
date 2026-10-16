@@ -1,5 +1,5 @@
 """
-tools/style.py
+src/adaptive_behavior/style.py
 --------------
 Matplotlib helpers for publication-ready panels.
 
@@ -8,7 +8,7 @@ Panel sizes
 Each panel must be created at its exact display width so LaTeX scales it 1:1
 and font sizes are correct. Use PANEL_MM to get the display width:
 
-    from tools.style import panel_fig, save_panel, PALETTE
+    from adaptive_behavior.style import panel_fig, save_panel, PALETTE
 
     fig, ax = panel_fig("fig1_A", h_mm=50)   # correct width automatically
     ax.scatter(x, y, color=PALETTE["high"])
@@ -16,7 +16,7 @@ and font sizes are correct. Use PANEL_MM to get the display width:
 
 PANEL_LAYOUT stores each panel's position and size derived from the figure
 layout (x, y from upper-left corner; w, h in mm). Run
-tools/extract_pptx_layout.py on a PowerPoint draft to fill in x/y values.
+src/adaptive_behavior/extract_pptx_layout.py on a PowerPoint draft to fill in x/y values.
 
 PANEL_MM is a backward-compatible alias: {key: (w, h)} derived from PANEL_LAYOUT.
 """
@@ -131,7 +131,7 @@ PALETTE = {
 
 TEXTWIDTH_MM = 165.0
 
-_FIGURES_DIR = os.path.join(os.path.dirname(__file__), "..", "figures")
+_FIGURES_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "figures")
 PANEL_LAYOUT = _auto_discover_layouts(_FIGURES_DIR)
 PANEL_MM = {k: (v["w"], v["h"]) for k, v in PANEL_LAYOUT.items()}
 

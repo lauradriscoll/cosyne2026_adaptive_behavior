@@ -1,5 +1,5 @@
 """
-tools/extract_pptx_layout.py
+src/adaptive_behavior/extract_pptx_layout.py
 -----------------------------
 Extract panel positions and sizes from a PowerPoint draft figure.
 
@@ -8,9 +8,9 @@ Workflow
 1. In PowerPoint, open the figure slide and rename each shape to its panel key
    (e.g. "fig2_A", "fig2_B") using Home → Select → Selection Pane.
 2. Run:
-       python tools/extract_pptx_layout.py figures/fig2/fig2.pptx --figure fig2
+       python -m adaptive_behavior.extract_pptx_layout figures/fig2/fig2.pptx --figure fig2
    or for a specific slide (0-indexed):
-       python tools/extract_pptx_layout.py figures/fig2/fig2.pptx --figure fig2 --slide 1
+       python -m adaptive_behavior.extract_pptx_layout figures/fig2/fig2.pptx --figure fig2 --slide 1
 3. The script writes two files alongside the .pptx:
        figures/fig2/layout.csv   — exact mm positions and sizes
        figures/fig2/layout.tex   — LaTeX \\newlength definitions for each panel
@@ -146,7 +146,7 @@ def write_layout_tex(panels, figure_prefix, out_path):
 
     lines = [
         f"% figures/{figure_prefix}/layout.tex — auto-generated, do not edit by hand",
-        f"% Regenerate: python tools/extract_pptx_layout.py figures/{figure_prefix}/{pptx_name} --figure {figure_prefix}",
+        f"% Regenerate: python -m adaptive_behavior.extract_pptx_layout figures/{figure_prefix}/{pptx_name} --figure {figure_prefix}",
         "",
         "% Per-panel positions and sizes (exact PowerPoint measurements in mm)",
     ]

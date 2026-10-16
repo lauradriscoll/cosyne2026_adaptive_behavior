@@ -1,7 +1,7 @@
 """
-tools/download_tectonic.py
+src/adaptive_behavior/download_tectonic.py
 Download the Tectonic LaTeX engine binary for this platform.
-Run from the repo root:  python tools/download_tectonic.py
+Run from the repo root:  python -m adaptive_behavior.download_tectonic
 """
 import sys
 import platform
@@ -10,7 +10,7 @@ import zipfile
 import os
 
 VERSION = "0.17.0"
-OUT_DIR = os.path.join("tools", "bin")
+OUT_DIR = "bin"
 OUT_BIN = os.path.join(OUT_DIR, "tectonic.exe" if sys.platform == "win32" else "tectonic")
 
 ASSETS = {

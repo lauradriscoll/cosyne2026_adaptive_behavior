@@ -1,5 +1,5 @@
 """
-tools/data_access.py
+src/adaptive_behavior/data_access.py
 Data loading / enrichment helpers used by the figure notebooks.
 
 Ported from aind-vr-foraging-paper (aind_vr_foraging_analysis.utils.parsing.data_access

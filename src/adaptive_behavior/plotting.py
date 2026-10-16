@@ -1,5 +1,5 @@
 """
-tools/plotting.py
+src/adaptive_behavior/plotting.py
 Plotting helpers used by the figure notebooks.
 
 Ported verbatim (except where noted) from aind-vr-foraging-paper

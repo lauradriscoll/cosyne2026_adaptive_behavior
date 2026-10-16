@@ -1,11 +1,11 @@
 """
-tools/make_panels_example.py
+src/adaptive_behavior/make_panels_example.py
 
 Generates placeholder panel PDFs so the document compiles before real figures
 exist. Each placeholder is sized at its exact display width (from PANEL_MM in
 style.py) so the 7pt label text proves fonts will be correct in the final PDF.
 
-Run from the repo root:   python tools/make_panels_example.py
+Run from the repo root:   python -m adaptive_behavior.make_panels_example
 """
 
 import textwrap
@@ -14,8 +14,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import os
 import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from tools.style import panel_fig, save_panel, PANEL_MM
+from adaptive_behavior.style import panel_fig, save_panel, PANEL_MM
 
 _MM_PER_CHAR_PER_PT = 0.30
 
@@ -61,6 +60,7 @@ FIG1_PANELS = [
     ("fig1_E", "figures/fig1/panels/fig1_E.pdf", "Mean velocity at last odor site before leaving"),
     ("fig1_F", "figures/fig1/panels/fig1_F.pdf", "P(leave) after consecutive reward omissions"),
     ("fig1_G", "figures/fig1/panels/fig1_G.pdf", "Mean velocity: reward omitted at first site"),
+    ("fig1_H", "figures/fig1/panels/fig1_H.pdf", "TODO: describe panel H"),
 ]
 
 FIG2_PANELS = [

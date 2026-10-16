@@ -1,5 +1,5 @@
 """
-tools/update_layout.py
+src/adaptive_behavior/update_layout.py
 ----------------------
 Re-sync a figure's layout after editing its .pptx file.
 
@@ -9,8 +9,8 @@ Steps performed for each figure:
   3. Regenerate placeholder PDFs at the new sizes
 
 Usage (run from repo root):
-    python tools/update_layout.py fig1
-    python tools/update_layout.py fig1 fig2
+    python -m adaptive_behavior.update_layout fig1
+    python -m adaptive_behavior.update_layout fig1 fig2
 """
 
 import argparse
@@ -18,15 +18,14 @@ import os
 import sys
 import textwrap
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from tools.extract_pptx_layout import extract, write_csv, write_layout_tex
-from tools.style import make_fig, save_panel, apply_style
-from tools.make_panels_example import FIG1_PANELS, FIG2_PANELS
+from adaptive_behavior.extract_pptx_layout import extract, write_csv, write_layout_tex
+from adaptive_behavior.style import make_fig, save_panel, apply_style
+from adaptive_behavior.make_panels_example import FIG1_PANELS, FIG2_PANELS
 
 _MM_PER_CHAR_PER_PT = 0.30
 

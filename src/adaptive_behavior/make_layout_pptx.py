@@ -1,13 +1,13 @@
 """
-tools/make_layout_pptx.py
+src/adaptive_behavior/make_layout_pptx.py
 Create a layout PowerPoint for each figure with named, colored rectangles
 representing panel slots. Edit positions/sizes in PowerPoint, then run:
 
-    python tools/extract_pptx_layout.py figures/figN/figN.pptx --figure figN
-    python tools/make_fig_tex.py figN --overwrite
+    python -m adaptive_behavior.extract_pptx_layout figures/figN/figN.pptx --figure figN
+    python -m adaptive_behavior.make_fig_tex figN --overwrite
 
 Run from the repo root:
-    python tools/make_layout_pptx.py
+    python -m adaptive_behavior.make_layout_pptx
 """
 
 import os
@@ -122,5 +122,5 @@ if __name__ == "__main__":
     make_pptx("fig2", FIG2_PANELS, "figures/fig2")
     print("\nNext steps:")
     print("  1. Open the .pptx files and move/resize panels as needed")
-    print("  2. python tools/extract_pptx_layout.py figures/fig1/fig1.pptx --figure fig1")
-    print("  3. python tools/make_fig_tex.py fig1 --overwrite")
+    print("  2. python -m adaptive_behavior.extract_pptx_layout figures/fig1/fig1.pptx --figure fig1")
+    print("  3. python -m adaptive_behavior.make_fig_tex fig1 --overwrite")
