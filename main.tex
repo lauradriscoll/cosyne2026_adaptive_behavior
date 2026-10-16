@@ -8,19 +8,24 @@
 \usepackage{tikz}
 \usepackage{subcaption}
 \usepackage{cleveref}
-
+\usepackage{titling}
+\usepackage{float}
+\setlength{\droptitle}{-5em} % Pulls title up toward top margin
+\posttitle{\par\end{center}\vspace{-1.5em}} % Tightens space between title and text
+\preauthor{}
+\postauthor{}
+\author{}
+\predate{}
+\postdate{}
+\date{}
 \input{setup.tex}
 \graphicspath{{figures/}}
 \title{\textbf{Multi-timescale adaptive behavior in a dynamic patch foraging environment}}
-\date{}
-
 \begin{document}
 \maketitle
 \thispagestyle{empty}
 % ---- Abstract text ----
-\textbf{Summary: }Natural decisions unfold through continuous interaction between an organism and its environment, yet most decision-making tasks segment behavior into experimenter-defined trials. Foraging offers a natural alternative where animals repeatedly decide whether to exploit a depleting patch or leave to explore alternatives. We developed a head-fixed virtual reality patch foraging task that preserves the hierarchical and self-paced structure of natural behavior while allowing experimental control and access. Mice traversed a virtual linear track and made self-initiated choices to harvest probabilistic water rewards at odor-cued sites. Odors cued three patch types: high- and low-value patches whose reward probabilities depleted with each collected reward, and an unrewarded patch. Naive mice rapidly acquired the task, learning to use odor identity and reward outcomes to guide patch-leaving decisions in fewer than seven sessions on average. Running velocity and respiration were composed of stereotyped motifs identified by hidden markov models and respiration, structured hierarchically across odor sites, patches, and sessions. Odor sites had repeated run, approach, stop, leave action sequences. Approach motifs shifted in sites approaching patch leaving, reflecting a latent decision variable. Mice had characteristic engagement dynamics across sessions. On average, mice left both rewarded patch types at equivalent reward probabilities, consistent with the Marginal Value Theorem's (MVT) prediction to leave when local reward rate falls below the global average, but inconsistent with simpler heuristics such as reward counting or win-stay/lose-shift strategies. Manipulating travel cost and global reward rate shifted patch-leaving decisions across both patch types, consistent with MVT predictions and suggesting that mice integrate reward information globally across the environment.  A Bayesian formulation of MVT with a two timescales of learning reproduced mouse behavior in steady-state and dynamic conditions.  This task and behavioral framework establish a foundation for dissecting the brain-wide neural dynamics that support flexible decision-making across multiple timescales. \\
-
-
+\textbf{Summary: }Natural decisions unfold through continuous interaction between an organism and its environment, yet most decision-making tasks segment behavior into experimenter-defined trials. Foraging offers a natural alternative where animals repeatedly decide whether to exploit a depleting patch or leave to explore alternatives. We developed a head-fixed virtual reality patch foraging task that preserves the hierarchical and self-paced structure of natural behavior while allowing experimental control and access. Mice traversed a virtual linear track and made self-initiated choices to harvest probabilistic water rewards at odor-cued sites. Odors cued three patch types: high- and low-value patches whose reward probabilities depleted with each collected reward, and an unrewarded patch. Naive mice rapidly acquired the task, learning to use odor identity and reward outcomes to guide patch-leaving decisions in fewer than seven sessions on average. Running velocity and respiration were composed of stereotyped motifs identified by hidden markov models and respiration, structured hierarchically across odor sites, patches, and sessions. Odor sites had repeated run, approach, stop, leave action sequences. Approach motifs shifted in sites approaching patch leaving, reflecting a latent decision variable. Mice had characteristic engagement dynamics across sessions. On average, mice left both rewarded patch types at equivalent reward probabilities, consistent with the Marginal Value Theorem's (MVT) prediction to leave when local reward rate falls below the global average, but inconsistent with simpler heuristics such as reward counting or win-stay/lose-shift strategies. Manipulating travel cost and global reward rate shifted patch-leaving decisions across both patch types, consistent with MVT predictions and suggesting that mice integrate reward information globally across the environment. A Bayesian formulation of MVT with two timescales of learning reproduced mouse behavior in steady-state and dynamic conditions.  This task and behavioral framework establish a foundation for dissecting the brain-wide neural dynamics that support flexible decision-making across multiple timescales.   \\
 \textbf{Additional Detail:}
 % ---- Figure 1 ----
 \input{figures/fig1/fig1.tex}
