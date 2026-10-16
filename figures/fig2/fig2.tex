@@ -10,7 +10,7 @@
 \begin{figure}[p]
   \centering
   \setcounter{subfigure}{0}
-  \resizebox{\linewidth}{!}{%
+  \makebox[\linewidth][c]{%  % natural size (no scaling), centered
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
@@ -109,12 +109,12 @@
         \phantomsubcaption\label{fig:2-p}%
       \end{subfigure}};
 
-  \end{tikzpicture}}% end resizebox
+  \end{tikzpicture}}% end makebox
 
   \caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
     (\subref{fig:2-a}) MVT schematic. An optimal forager leaves a patch when the instantaneous local reward rate falls below the global average reward rate, which is set by travel time between patches and within-patch reward statistics.
     (\subref{fig:2-b}) Bayesian MVT model schematic. The agent maintains a separate posterior over reward probability $q$ for each odor-cued patch type, updated after each binary outcome via Bayes' rule with a forgetting parameter $\delta < 1$ that discounts prior beliefs within a patch. At each odor site, a sample $\tilde{q}$ is drawn from the current posterior; the agent leaves if the implied local reward rate falls below a running estimate of the global reward rate $\bar{R}$.
-    (\subref{fig:2-c}) Six behavioral metrics at patch leaving for mice ($N=24$): reward probability at leaving did not differ across patch types (ns), while the number of stops and rewards collected were significantly higher in High patches ($^{***}p<0.001$). Lines connect individual animals.
+    (\subref{fig:2-c}) Three behavioral metrics at patch leaving for mice ($N=24$): reward probability at leaving did not differ across patch types (ns), while the number of stops and rewards collected were significantly higher in High patches ($^{***}p<0.001$). Lines connect individual animals.
     (\subref{fig:2-d}) Same metrics for Bayesian MVT model simulations, reproducing the pattern in (\subref{fig:2-c}).
     (\subref{fig:2-e},\subref{fig:2-f}) Probability of leaving as a function of consecutive reward omissions at patch entry, for mice (\subref{fig:2-e}) and model (\subref{fig:2-f}). Mice were more likely to leave the Low patch than the High patch after the same number of failures ($^{***}p<0.001$, $^{**}p<0.01$), reflecting odor-cued prior expectations about patch quality.
     (\subref{fig:2-g},\subref{fig:2-h}) Change in $P(\text{reward})$ at leaving relative to control as a function of inter-patch travel distance, in mice (\subref{fig:2-g}) and model (\subref{fig:2-h}). Longer distances lower the effective global reward rate, reducing the leaving threshold ($^{**}p<0.01$, $^{*}p<0.05$).
