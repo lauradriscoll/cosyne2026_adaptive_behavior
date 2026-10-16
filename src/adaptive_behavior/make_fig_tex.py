@@ -122,9 +122,16 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         open_wrap = "\\resizebox{\\linewidth}{!}{%"
         align_block = "  \\centering\n" + caption_size
 
+    tikz_opts = "inner sep=0pt, outer sep=0pt"
+    if side_caption:
+        # A tikzpicture's baseline is its bottom edge, which would drop the caption
+        # column below the figure. Put the baseline ~one cap height under the top
+        # edge so the caption's first line sits level with the top of the figure.
+        tikz_opts += ", baseline={([yshift=-7pt]current bounding box.north)}"
+
     tikz_block = (
         f"  {open_wrap}\n"
-        f"  \\begin{{tikzpicture}}[inner sep=0pt, outer sep=0pt]\n"
+        f"  \\begin{{tikzpicture}}[{tikz_opts}]\n"
         f"\n"
         f"{node_block}\n"
         f"\n"

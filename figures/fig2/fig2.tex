@@ -13,7 +13,7 @@
   \setcounter{subfigure}{0}
   \begin{minipage}[t]{110mm}%
   \makebox[110mm][l]{%  % natural size (no scaling), left-aligned
-  \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
+  \begin{tikzpicture}[inner sep=0pt, outer sep=0pt, baseline={([yshift=-7pt]current bounding box.north)}]
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
       \begin{subfigure}[t]{\FigIIAW}%
