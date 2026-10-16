@@ -8,9 +8,11 @@
 \input{figures/fig2/layout.tex}
 
 \begin{figure}[p]
-  \centering
+  \raggedright  % left-aligned
+  \DeclareCaptionFont{tenpt}{\fontsize{10}{12}\selectfont}
+  \captionsetup{font=tenpt}  % 10 pt caption
   \setcounter{subfigure}{0}
-  \makebox[\linewidth][c]{%  % natural size (no scaling), centered
+  \makebox[\linewidth][l]{%  % natural size (no scaling), left-aligned
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%

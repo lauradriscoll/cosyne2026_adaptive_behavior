@@ -93,12 +93,12 @@ def _auto_discover_layouts(figures_dir):
 PANEL_STYLE = {
     "font.family":          "sans-serif",
     "font.sans-serif":      ["Arial", "Helvetica", "DejaVu Sans"],
-    "font.size":            7,
-    "axes.labelsize":       7,
-    "axes.titlesize":       7,
-    "xtick.labelsize":      6,
-    "ytick.labelsize":      6,
-    "legend.fontsize":      6,
+    "font.size":            5,
+    "axes.labelsize":       5,
+    "axes.titlesize":       5,
+    "xtick.labelsize":      5,
+    "ytick.labelsize":      5,
+    "legend.fontsize":      5,
     "axes.linewidth":       0.5,
     "lines.linewidth":      0.3,
     "xtick.major.width":    0.5,
@@ -144,11 +144,33 @@ def apply_style():
 # Figure / axes creation
 # ---------------------------------------------------------------------------
 
-def panel_fig(panel_key, h_mm=None, nrows=1, ncols=1, **subplot_kw):
+def panel_fig(panel_key, h_mm=None, nrows=1, ncols=1, columns=None, **subplot_kw):
+    """Create a figure at the panel's exact size.
+
+    ncols=3 (single row, no `columns`) is a layout shortcut: the panel is divided
+    into 3 columns and ONE axes is returned spanning the left 2, leaving the right
+    column empty. Pass `columns` to pick other columns explicitly: an int n uses
+    the first n columns, a (start, stop) pair uses columns start..stop-1, e.g.
+    ncols=3, columns=(1, 3) -> right 2/3.
+    Any other ncols/nrows behaves as in plt.subplots (array of axes).
+    """
     w_mm, default_h = PANEL_MM[panel_key]
     if h_mm is None:
         h_mm = default_h
-    return make_fig(w_mm, h_mm, nrows=nrows, ncols=ncols, **subplot_kw)
+    if columns is None and nrows == 1 and ncols == 3:
+        columns = 2
+    if columns is None:
+        return make_fig(w_mm, h_mm, nrows=nrows, ncols=ncols, **subplot_kw)
+    if nrows != 1 or ncols < 2:
+        raise ValueError("columns needs nrows=1 and ncols >= 2")
+    start, stop = (0, columns) if isinstance(columns, int) else columns
+    if not 0 <= start < stop <= ncols:
+        raise ValueError(f"columns {columns} out of range for ncols={ncols}")
+    apply_style()
+    fig = plt.figure(figsize=(w_mm / 25.4, h_mm / 25.4))
+    ax = fig.add_subplot(fig.add_gridspec(1, ncols)[0, start:stop], **subplot_kw)
+    clean_ax(ax)
+    return fig, ax
 
 
 def make_fig(w_mm, h_mm, nrows=1, ncols=1, **subplot_kw):
