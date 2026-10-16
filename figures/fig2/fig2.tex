@@ -9,10 +9,10 @@
 
 \begin{figure}[p]
   \raggedright  % left-aligned
-  \DeclareCaptionFont{tenpt}{\fontsize{10}{12}\selectfont}
-  \captionsetup{font=tenpt}  % 10 pt caption
+  \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \setcounter{subfigure}{0}
-  \makebox[\linewidth][l]{%  % natural size (no scaling), left-aligned
+  \begin{minipage}[t]{110mm}%
+  \makebox[110mm][l]{%  % natural size (no scaling), left-aligned
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
@@ -112,7 +112,8 @@
       \end{subfigure}};
 
   \end{tikzpicture}}% end makebox
-
+  \end{minipage}\hfill%
+  \begin{minipage}[t]{\dimexpr\linewidth-110mm-4mm\relax}%
   \caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
     (\subref{fig:2-a}) MVT schematic. An optimal forager leaves a patch when the instantaneous local reward rate falls below the global average reward rate, which is set by travel time between patches and within-patch reward statistics.
     (\subref{fig:2-b}) Bayesian MVT model schematic. The agent maintains a separate posterior over reward probability $q$ for each odor-cued patch type, updated after each binary outcome via Bayes' rule with a forgetting parameter $\delta < 1$ that discounts prior beliefs within a patch. At each odor site, a sample $\tilde{q}$ is drawn from the current posterior; the agent leaves if the implied local reward rate falls below a running estimate of the global reward rate $\bar{R}$.
@@ -125,4 +126,5 @@
     (\subref{fig:2-l},\subref{fig:2-m}) Change in $P(\text{reward})$ at leaving and change in rewards collected under the higher global reward rate condition, in mice (\subref{fig:2-l}) and model (\subref{fig:2-m}). Both patch types shifted, including the unchanged control patch ($^{***}p<0.001$).
     (\subref{fig:2-o},\subref{fig:2-p}) Same as (\subref{fig:2-l},\subref{fig:2-m}) for the lower global reward rate condition ($^{***}p<0.001$, $^{**}p<0.01$).}
   \label{fig:2}
+  \end{minipage}
 \end{figure}

@@ -73,6 +73,13 @@ FIG2_PANELS = [
     ("fig2_G", "figures/fig2/panels/fig2_G.pdf", "P(reward) at leaving vs. inter-patch distance — model"),
     ("fig2_H", "figures/fig2/panels/fig2_H.pdf", "PCA trajectories of population activity"),
     ("fig2_I", "figures/fig2/panels/fig2_I.pdf", "Population PSTHs: heterogeneous cell types"),
+    ("fig2_J", "figures/fig2/panels/fig2_J.pdf", "TODO: describe panel J"),
+    ("fig2_K", "figures/fig2/panels/fig2_K.pdf", "TODO: describe panel K"),
+    ("fig2_L", "figures/fig2/panels/fig2_L.pdf", "TODO: describe panel L"),
+    ("fig2_M", "figures/fig2/panels/fig2_M.pdf", "TODO: describe panel M"),
+    ("fig2_N", "figures/fig2/panels/fig2_N.pdf", "TODO: describe panel N"),
+    ("fig2_O", "figures/fig2/panels/fig2_O.pdf", "TODO: describe panel O"),
+    ("fig2_P", "figures/fig2/panels/fig2_P.pdf", "TODO: describe panel P"),
 ]
 
 if __name__ == "__main__":
