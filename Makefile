@@ -1,5 +1,5 @@
 MAIN    = main
-TECTONIC = tools/bin/tectonic.exe
+TECTONIC = bin/tectonic.exe
 
 # Download URL for the Tectonic binary (Windows x64)
 TECTONIC_VERSION = 0.17.0
@@ -12,12 +12,12 @@ all: panels pdf
 
 # Generate panel PDFs from figure scripts
 panels:
-	python figures/fig1/make_panels.py
-	python figures/fig2/make_panels.py
+	uv run python figures/fig1/make_panels.py
+	uv run python figures/fig2/make_panels.py
 
 # Generate placeholder panels (useful before real data is loaded)
 panels-placeholder:
-	python tools/make_panels_example.py
+	uv run python -m adaptive_behavior.make_panels_example
 
 # Compile the LaTeX document using the local Tectonic binary
 pdf: $(TECTONIC)
@@ -28,7 +28,7 @@ $(TECTONIC):
 	$(MAKE) tectonic
 
 tectonic:
-	python tools/download_tectonic.py
+	uv run python -m adaptive_behavior.download_tectonic
 
 # Remove LaTeX build artifacts (keeps panel PDFs and Tectonic binary)
 clean:

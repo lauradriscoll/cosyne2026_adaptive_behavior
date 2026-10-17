@@ -105,6 +105,9 @@ PANEL_STYLE = {
     "ytick.major.width":    0.5,
     "xtick.major.size":     2.5,
     "ytick.major.size":     2.5,
+    "xtick.major.pad":      1,    # tick labels close to the ticks (default 3.5)
+    "ytick.major.pad":      1,
+    "axes.labelpad":        1,    # axis labels close to the tick labels (default 4)
     "xtick.direction":      "out",
     "ytick.direction":      "out",
     "xtick.minor.visible":  False,
