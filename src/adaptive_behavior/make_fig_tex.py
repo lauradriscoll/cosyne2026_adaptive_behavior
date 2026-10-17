@@ -115,8 +115,8 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
     if fig_name in NATURAL_SIZE_FIGURES:
         wrap_name = "makebox"
         fig_w_mm = math.ceil(max(float(p["x_mm"]) + float(p["w_mm"]) for p in panels))
-        open_wrap = f"\\makebox[{fig_w_mm}mm][l]{{%  % natural size (no scaling), left-aligned"
-        align_block = "  \\raggedright  % left-aligned\n" + caption_size
+        open_wrap = f"\\makebox[{fig_w_mm}mm][c]{{%  % natural size (no scaling), centered"
+        align_block = "  \\centering  % centered\n" + caption_size
     else:
         wrap_name = "resizebox"
         open_wrap = "\\resizebox{\\linewidth}{!}{%"
