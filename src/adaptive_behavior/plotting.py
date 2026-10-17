@@ -7,12 +7,43 @@ Ported verbatim (except where noted) from aind-vr-foraging-paper
 trial_collection, raster_with_velocity, plot_condition_comparison.
 """
 
+import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.legend_handler import HandlerBase
 from matplotlib.lines import Line2D
+from matplotlib.image import BboxImage
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+from matplotlib.transforms import Bbox, TransformedBbox
 from scipy.stats import ttest_ind, ttest_rel
+
+
+class ImageHandler(HandlerBase):
+    """Legend handler that draws an image (array) as the legend marker.
+
+    Usage: ax.legend(handles, labels, handler_map={handle: ImageHandler(img)})
+    """
+
+    def __init__(self, img, **kwargs):
+        super().__init__(**kwargs)
+        self.img = img
+
+    def create_artists(self, legend, orig_handle, xdescent, ydescent, width, height,
+                       fontsize, trans):
+        side = min(width, height)  # keep the icon square
+        x0 = xdescent + (width - side) / 2
+        y0 = ydescent + (height - side) / 2
+        bbox = TransformedBbox(Bbox.from_bounds(x0, y0, side, side), trans)
+        return [BboxImage(bbox, data=self.img, interpolation="antialiased", zorder=5)]
+
+
+def _as_image(img):
+    """Accept a path or an array and return an RGBA float/uint8 array (or None)."""
+    if img is None:
+        return None
+    return mpimg.imread(str(img)) if isinstance(img, (str, bytes)) or hasattr(img, "__fspath__") else img
 
 
 def trial_collection(
@@ -178,7 +209,22 @@ def raster_with_velocity(
     sniff_color: str = "#0d7377",
     sniff_scale: float = 0.3,
     bar_alpha: float = 0.8,
+    tone_image=None,
+    reward_image=None,
+    marker_size_pt: float = 4.5,
 ):
+    """tone_image / reward_image: optional path or array drawn instead of the red
+    square (choice tone) / blue circle (reward) markers, `marker_size_pt` points wide.
+    The legend keeps empty 'Tone' / 'Reward' handles so callers can attach an
+    ImageHandler to them."""
+
+    tone_img = _as_image(tone_image)
+    reward_img = _as_image(reward_image)
+
+    def _image_marker(img, x, y):
+        box = OffsetImage(img, zoom=marker_size_pt / img.shape[1])
+        ax1.add_artist(AnnotationBbox(box, (x, y), frameon=False, pad=0,
+                                      zorder=5, annotation_clip=False))
 
     active_site = active_site.copy()
 
@@ -273,17 +319,35 @@ def raster_with_velocity(
             color = '#b3b3b3'
         elif row['site_label'] == 'RewardSite':
             color = color_dict_label[row.patch_label]
-            if row["has_choice"] == True:
-                ax1.scatter(row.choice_cue_time - row.patch_onset, y,
-                            color='red', marker='s', s=n_patches * 0.08, zorder=5,
-                            edgecolor='black', linewidth=0.25, alpha=0.9, label='Tone')
-            if row["has_reward"] == 1 and row["has_choice"] == True:
-                ax1.scatter(row.choice_cue_time - row.patch_onset, y,
-                            color='red', marker='s', s=n_patches * 0.08, zorder=5,
-                            edgecolor='black', linewidth=0.25, alpha=0.9, label='Tone')
-                ax1.scatter(row.time_since_entry + row.duration_epoch / 2, y,
-                            color='steelblue', marker='o', s=n_patches * 0.08, zorder=5,
-                            edgecolor='black', linewidth=0.25, alpha=0.9, label='Reward')
+            if tone_img is not None or reward_img is not None:
+                # image markers (empty scatters below keep the legend handles)
+                if row["has_choice"] == True:
+                    if tone_img is not None:
+                        _image_marker(tone_img, row.choice_cue_time - row.patch_onset, y)
+                    else:
+                        ax1.scatter(row.choice_cue_time - row.patch_onset, y,
+                                    color='red', marker='s', s=n_patches * 0.08, zorder=5,
+                                    edgecolor='black', linewidth=0.25, alpha=0.9, label='Tone')
+                if row["has_reward"] == 1 and row["has_choice"] == True:
+                    x_rew = row.time_since_entry + row.duration_epoch / 2
+                    if reward_img is not None:
+                        _image_marker(reward_img, x_rew, y)
+                    else:
+                        ax1.scatter(x_rew, y,
+                                    color='steelblue', marker='o', s=n_patches * 0.08, zorder=5,
+                                    edgecolor='black', linewidth=0.25, alpha=0.9, label='Reward')
+            else:
+                if row["has_choice"] == True:
+                    ax1.scatter(row.choice_cue_time - row.patch_onset, y,
+                                color='red', marker='s', s=n_patches * 0.08, zorder=5,
+                                edgecolor='black', linewidth=0.25, alpha=0.9, label='Tone')
+                if row["has_reward"] == 1 and row["has_choice"] == True:
+                    ax1.scatter(row.choice_cue_time - row.patch_onset, y,
+                                color='red', marker='s', s=n_patches * 0.08, zorder=5,
+                                edgecolor='black', linewidth=0.25, alpha=0.9, label='Tone')
+                    ax1.scatter(row.time_since_entry + row.duration_epoch / 2, y,
+                                color='steelblue', marker='o', s=n_patches * 0.08, zorder=5,
+                                edgecolor='black', linewidth=0.25, alpha=0.9, label='Reward')
 
         if barplots:
             ax1.barh(y, left=row.time_since_entry, height=0.85,
@@ -350,6 +414,12 @@ def raster_with_velocity(
 
     ax1.set_xlim(time_left, time_right)
 
+    # Empty proxy artists so image markers still get 'Tone' / 'Reward' legend entries
+    if tone_img is not None:
+        ax1.scatter([], [], s=0, label='Tone')
+    if reward_img is not None:
+        ax1.scatter([], [], s=0, label='Reward')
+
     # Legend
     handles, labels = ax1.get_legend_handles_labels()
     by_label = dict(zip(labels, handles))
@@ -411,8 +481,8 @@ def plot_condition_comparison(
             x_map[label], mean_val,
             yerr=sem_val,
             fmt='o', color=color,
-            capsize=0, capthick=0, elinewidth=1.2,
-            markersize=5, zorder=10,
+            capsize=0, capthick=0, elinewidth=0.5,
+            markersize=3, zorder=10,
         )
 
     # --- Formatting (set xlim before significance so transform works) ---

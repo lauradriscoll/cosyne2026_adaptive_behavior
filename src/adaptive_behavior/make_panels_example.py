@@ -80,6 +80,8 @@ FIG2_PANELS = [
     ("fig2_N", "figures/fig2/panels/fig2_N.pdf", "TODO: describe panel N"),
     ("fig2_O", "figures/fig2/panels/fig2_O.pdf", "TODO: describe panel O"),
     ("fig2_P", "figures/fig2/panels/fig2_P.pdf", "TODO: describe panel P"),
+    ("fig2_Q", "figures/fig2/panels/fig2_Q.pdf", "TODO: describe panel Q"),
+    ("fig2_R", "figures/fig2/panels/fig2_R.pdf", "TODO: describe panel R"),
 ]
 
 if __name__ == "__main__":

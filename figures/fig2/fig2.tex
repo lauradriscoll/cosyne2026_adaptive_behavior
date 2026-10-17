@@ -11,9 +11,8 @@
   \raggedright  % left-aligned
   \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \setcounter{subfigure}{0}
-  \begin{minipage}[t]{110mm}%
-  \makebox[110mm][l]{%  % natural size (no scaling), left-aligned
-  \begin{tikzpicture}[inner sep=0pt, outer sep=0pt, baseline={([yshift=-7pt]current bounding box.north)}]
+  \makebox[155mm][l]{%  % natural size (no scaling), left-aligned
+  \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
       \begin{subfigure}[t]{\FigIIAW}%
@@ -111,20 +110,33 @@
         \phantomsubcaption\label{fig:2-p}%
       \end{subfigure}};
 
+    \node[anchor=north west] at (\FigIIQX, -\FigIIQY) {%
+      \begin{subfigure}[t]{\FigIIQW}%
+        \panel{Q}{\panelgraphic[width=\linewidth]{figures/fig2/panels/fig2_Q.pdf}}%
+        \phantomsubcaption\label{fig:2-q}%
+      \end{subfigure}};
+
+    \node[anchor=north west] at (\FigIIRX, -\FigIIRY) {%
+      \begin{subfigure}[t]{\FigIIRW}%
+        \panel{R}{\panelgraphic[width=\linewidth]{figures/fig2/panels/fig2_R.pdf}}%
+        \phantomsubcaption\label{fig:2-r}%
+      \end{subfigure}};
+
   \end{tikzpicture}}% end makebox
-  \end{minipage}\hfill%
-  \begin{minipage}[t]{\dimexpr\linewidth-110mm-4mm\relax}%
+
   \caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
     (\subref{fig:2-a}) MVT schematic. An optimal forager leaves a patch when the instantaneous local reward rate falls below the global average reward rate, which is set by travel time between patches and within-patch reward statistics.
     (\subref{fig:2-b}) Bayesian MVT model schematic. The agent maintains a separate posterior over reward probability $q$ for each odor-cued patch type, updated after each binary outcome via Bayes' rule with a forgetting parameter $\delta < 1$ that discounts prior beliefs within a patch. At each odor site, a sample $\tilde{q}$ is drawn from the current posterior; the agent leaves if the implied local reward rate falls below a running estimate of the global reward rate $\bar{R}$.
-    (\subref{fig:2-c}) Three behavioral metrics at patch leaving for mice ($N=24$): reward probability at leaving did not differ across patch types (ns), while the number of stops and rewards collected were significantly higher in High patches ($^{***}p<0.001$). Lines connect individual animals.
+    (\subref{fig:2-c}) Three behavioral metrics at patch leaving in mice ($N=24$): reward probability at leaving did not differ across patch types, whereas the number of stops and rewards collected were higher in High patches. Lines connect individual animals.
     (\subref{fig:2-d}) Same metrics for Bayesian MVT model simulations, reproducing the pattern in (\subref{fig:2-c}).
-    (\subref{fig:2-e},\subref{fig:2-f}) Probability of leaving as a function of consecutive reward omissions at patch entry, for mice (\subref{fig:2-e}) and model (\subref{fig:2-f}). Mice were more likely to leave the Low patch than the High patch after the same number of failures ($^{***}p<0.001$, $^{**}p<0.01$), reflecting odor-cued prior expectations about patch quality.
-    (\subref{fig:2-g},\subref{fig:2-h}) Change in $P(\text{reward})$ at leaving relative to control as a function of inter-patch travel distance, in mice (\subref{fig:2-g}) and model (\subref{fig:2-h}). Longer distances lower the effective global reward rate, reducing the leaving threshold ($^{**}p<0.01$, $^{*}p<0.05$).
-    (\subref{fig:2-i},\subref{fig:2-j}) Change in $P(\text{reward})$ at leaving as a function of inter-patch wheel friction, in mice (\subref{fig:2-i}) and model (\subref{fig:2-j}). Increased friction raises the effective travel cost, producing equivalent threshold shifts ($^{*}p<0.05$, $^{***}p<0.001$).
+    (\subref{fig:2-e},\subref{fig:2-f}) Probability of leaving as a function of consecutive reward omissions at patch entry, in mice (\subref{fig:2-e}) and model (\subref{fig:2-f}). Mice left the Low patch more readily than the High patch after the same number of failures, reflecting odor-cued prior expectations about patch quality.
+    (\subref{fig:2-g},\subref{fig:2-h}) Change in $P(\text{reward})$ at leaving, relative to control, as a function of inter-patch travel distance, in mice (\subref{fig:2-g}) and model (\subref{fig:2-h}). Longer distances lower the effective global reward rate, reducing the leaving threshold.
+    (\subref{fig:2-i},\subref{fig:2-j}) Same as (\subref{fig:2-g},\subref{fig:2-h}) for inter-patch wheel friction. Increased friction raises the effective travel cost, producing equivalent threshold shifts.
     (\subref{fig:2-k},\subref{fig:2-n}) Reward probability depletion curves for the higher (\subref{fig:2-k}) and lower (\subref{fig:2-n}) global reward rate conditions. Solid lines show manipulated patch types; dashed lines show control.
-    (\subref{fig:2-l},\subref{fig:2-m}) Change in $P(\text{reward})$ at leaving and change in rewards collected under the higher global reward rate condition, in mice (\subref{fig:2-l}) and model (\subref{fig:2-m}). Both patch types shifted, including the unchanged control patch ($^{***}p<0.001$).
-    (\subref{fig:2-o},\subref{fig:2-p}) Same as (\subref{fig:2-l},\subref{fig:2-m}) for the lower global reward rate condition ($^{***}p<0.001$, $^{**}p<0.01$).}
+    (\subref{fig:2-l},\subref{fig:2-m}) Change in $P(\text{reward})$ at leaving and change in rewards collected under the higher global reward rate condition, in mice (\subref{fig:2-l}) and model (\subref{fig:2-m}). Both patch types shifted, including the unchanged control patch.
+    (\subref{fig:2-o},\subref{fig:2-p}) Same as (\subref{fig:2-l},\subref{fig:2-m}) for the lower global reward rate condition.
+    (\subref{fig:2-q}) TODO: describe panel Q.
+    (\subref{fig:2-r}) TODO: describe panel R.
+    Significance (paired $t$-tests across mice): ns, not significant; $^{*}p<0.05$, $^{**}p<0.01$, $^{***}p<0.001$.}
   \label{fig:2}
-  \end{minipage}
 \end{figure}

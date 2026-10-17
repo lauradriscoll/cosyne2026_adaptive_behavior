@@ -50,7 +50,7 @@ def _extract_caption(tex_path: Path) -> str | None:
 # Figures kept at their natural (pptx) size instead of being scaled to \linewidth
 NATURAL_SIZE_FIGURES = {"fig2"}
 # Figures whose caption sits to the right of the figure instead of below it
-SIDE_CAPTION_FIGURES = {"fig2"}
+SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
 
 
 def make_tex(fig_name: str, overwrite: bool = False) -> None:
