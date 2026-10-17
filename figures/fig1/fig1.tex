@@ -136,27 +136,16 @@
 
   \end{tikzpicture}}% end resizebox
 
-  % \caption{\textbf{Task design and behavior.}
-  %   (\subref{fig:1-a}) schematic pdf
-  %   (\subref{fig:1-b}) patch ethogram from example session
-  %   (\subref{fig:1-c}) placeholder
-  %   (\subref{fig:1-d}) p(stop) in first site
-  %   (\subref{fig:1-e}) cumulative distribution of stops per patch
-  %   (\subref{fig:1-f}) site level meme
-  %   (\subref{fig:1-g}) example kinematics for site
-  %   (\subref{fig:1-h}) example kinematics in 2d
-  %   (\subref{fig:1-i}) intersite approach states
-  %   (\subref{fig:1-j}) odorsite stopping states
-  %   (\subref{fig:1-k}) odorsite leaving states
-  %   (\subref{fig:1-l}) patch level meme
-  %   (\subref{fig:1-m}) example kinematics for patch
-  %   (\subref{fig:1-n}) example kinematics in 2d
-  %   (\subref{fig:1-o}) average intersite traces for all mice
-  %   (\subref{fig:1-p}) time to stop
-  %   (\subref{fig:1-q}) session level meme
-  %   (\subref{fig:1-r}) example kinematics in 3d
-  %   (\subref{fig:1-s}) example states for runner
-  %   (\subref{fig:1-t}) example states for stopper
-  %   \emph{Insets}: Head-fixed mouse on wheel in three-screen VR environment with odor delivery; task graph showing mice running between patches, encountering odor sites, and choosing to stop (harvest) or run (leave); single-site velocity profile showing sustained stopping below velocity $v$ triggering a choice tone ($t$) followed by probabilistic reward ($d$); example velocity traces for short, long, and skipped patch visits.}
+  \caption{\textbf{Multi-timescale structure of behavior in a virtual patch-foraging task.}
+    (\subref{fig:1-a}) Head-fixed mice run on a wheel through a virtual track with odor delivery. Between patches they run; at odor sites they choose to stop and harvest (a tone follows sustained stopping, then probabilistic reward) or run on. Patch types differ in reward probability, which depletes with each reward collected.
+    (\subref{fig:1-b}) One mouse's session: velocity for every patch visit, with tones, rewards, and patch type (color).
+    (\subref{fig:1-c}--\subref{fig:1-e}) All mice ($n=24$): velocity aligned to odor onset at rewarded and unrewarded sites (\subref{fig:1-c},\subref{fig:1-e}), and cumulative distribution of stops per patch (\subref{fig:1-d}).
+    (\subref{fig:1-f},\subref{fig:1-l},\subref{fig:1-q}) Behavior is organized across nested timescales: sites (seconds), patches (tens of seconds to minutes), and sessions (tens of minutes).
+    (\subref{fig:1-g},\subref{fig:1-h}) Site level: velocity and sniff frequency during one odor-site visit, shaded by HMM state (\subref{fig:1-g}) and as a trajectory in velocity--sniff space (\subref{fig:1-h}).
+    (\subref{fig:1-i}--\subref{fig:1-k}) HMM state sequences (one row per site) and mean velocity aligned to approach during the inter-site (\subref{fig:1-i}), stopping at odor onset (\subref{fig:1-j}), and leaving (\subref{fig:1-k}).
+    (\subref{fig:1-m},\subref{fig:1-n}) Patch level: one patch visit with HMM states (\subref{fig:1-m}), and as a velocity--sniff trajectory colored by sites from leaving (\subref{fig:1-n}).
+    (\subref{fig:1-o},\subref{fig:1-p}) Behavior shifts as mice approach leaving: mean velocity aligned to inter-site entry (\subref{fig:1-o}) and time to stop at odor sites relative to six sites before leaving (\subref{fig:1-p}; mean $\pm$ s.e.m., $n=13$ mice), colored by sites from leaving.
+    (\subref{fig:1-r},\subref{fig:1-t}) Session level: session-averaged probability of three engagement states (engaged, disengage-run, disengage-stop; mean $\pm$ s.e.m. across sessions) for two mice that disengage differently, by stopping (\subref{fig:1-r}, $n=20$ sessions) or by running without stopping (\subref{fig:1-t}, $n=18$ sessions).
+    (\subref{fig:1-s}) Example session as a trajectory in time--velocity--sniff space around patch entries.}
   \label{fig:1}
 \end{figure}
