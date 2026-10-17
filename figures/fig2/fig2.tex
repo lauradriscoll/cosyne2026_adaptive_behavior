@@ -8,11 +8,15 @@
 \input{figures/fig2/layout.tex}
 
 \begin{figure}[p]
-  \raggedright  % left-aligned
+  \centering  % centered
   \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \setcounter{subfigure}{0}
-  \makebox[155mm][l]{%  % natural size (no scaling), left-aligned
+  \makebox[163mm][c]{%  % natural size (no scaling), centered
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
+
+    \draw[line width=0.4pt] (0.0mm, -0.0mm) rectangle (163.0mm, -66.3mm);  % frame fig2_Z
+
+    \draw[line width=0.4pt] (0.0mm, -66.3mm) rectangle (163.0mm, -132.6mm);  % frame fig2_ZZ
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
       \begin{subfigure}[t]{\FigIIAW}%
@@ -124,7 +128,7 @@
 
   \end{tikzpicture}}% end makebox
 
-\caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
+  \caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
     (\subref{fig:2-a}) MVT schematic. An optimal forager leaves a patch when the instantaneous marginal reward rate falls below the global average reward rate, set by travel time between patches and within-patch reward statistics.
     (\subref{fig:2-b}) Reward probability at leaving did not differ across patch types (ns), while rewards collected differed significantly, ruling out simple heuristics such as reward counting. Lines connect individual animals ($N=24$), High (orange) and Low (teal) patch types.
     (\subref{fig:2-c}) Probability of leaving after early consecutive reward omissions upon patch entry. Mice were more likely to leave the Low than the High patch after identical failure sequences, reflecting odor-cued prior expectations about patch quality.

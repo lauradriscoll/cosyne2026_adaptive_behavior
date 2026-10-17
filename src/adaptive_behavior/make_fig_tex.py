@@ -43,8 +43,8 @@ def _extract_caption(tex_path: Path) -> str | None:
         text = tex_path.read_text(encoding="utf-8")
     except FileNotFoundError:
         return None
-    m = re.search(r"(  \\caption\{.*?)(?=\n  \\label\{fig:)", text, re.DOTALL)
-    return m.group(1) if m else None
+    m = re.search(r"(\\caption\{.*?)(?=\n\s*\\label\{fig:)", text, re.DOTALL)
+    return "  " + m.group(1) if m else None  # tolerate a hand-unindented \caption
 
 
 # Figures kept at their natural (pptx) size instead of being scaled to \linewidth
@@ -75,6 +75,17 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
     # Sort panels in alphabetical order (A, B, C, …) regardless of pptx shape order
     panels.sort(key=lambda p: _panel_letter(p["panel"]))
 
+    # Shapes named figN_Z, figN_ZZ, ... are frames drawn in the pptx around groups of
+    # panels: draw them as rectangles, not as lettered panels
+    frame_shapes = [p for p in panels if set(_panel_letter(p["panel"])) == {"Z"}]
+    panels = [p for p in panels if p not in frame_shapes]
+    frame_nodes = [
+        f"    \\draw[line width=0.4pt] ({float(p['x_mm']):.1f}mm, {-float(p['y_mm']):.1f}mm) "
+        f"rectangle ({float(p['x_mm']) + float(p['w_mm']):.1f}mm, "
+        f"{-(float(p['y_mm']) + float(p['h_mm'])):.1f}mm);  % frame {p['panel']}"
+        for p in frame_shapes
+    ]
+
     num = _fig_number(fig_name)
     rom = _roman(num)
 
@@ -96,7 +107,7 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         )
         caption_entries.append(f"    (\\subref{{{label}}}) Placeholder caption for panel {letter}.")
 
-    node_block    = "\n\n".join(nodes)
+    node_block    = "\n\n".join(frame_nodes + nodes)
     caption_block = "\n".join(caption_entries)
 
     if existing_caption:
@@ -114,7 +125,7 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
     side_caption = fig_name in SIDE_CAPTION_FIGURES
     if fig_name in NATURAL_SIZE_FIGURES:
         wrap_name = "makebox"
-        fig_w_mm = math.ceil(max(float(p["x_mm"]) + float(p["w_mm"]) for p in panels))
+        fig_w_mm = math.ceil(max(float(p["x_mm"]) + float(p["w_mm"]) for p in panels + frame_shapes))
         open_wrap = f"\\makebox[{fig_w_mm}mm][c]{{%  % natural size (no scaling), centered"
         align_block = "  \\centering  % centered\n" + caption_size
     else:
