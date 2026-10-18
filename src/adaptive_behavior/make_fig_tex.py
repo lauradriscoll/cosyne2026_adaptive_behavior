@@ -48,10 +48,12 @@ def _extract_caption(tex_path: Path) -> str | None:
 
 
 # Figures kept at their natural (pptx) size instead of being scaled to \linewidth
-NATURAL_SIZE_FIGURES = {"fig2"}
+NATURAL_SIZE_FIGURES = {"fig2", "fig3"}  # fig3 = alternative version of fig2 (see main.tex toggle)
 # Figures whose caption sits to the right of the figure instead of below it
 # Figures whose image and caption are separate floats (image first, caption on the next page)
-SPLIT_CAPTION_FIGURES = {"fig2"}
+SPLIT_CAPTION_FIGURES = {"fig2", "fig3"}
+# Negative space above the image float of a split figure (mm) to pull it up under the previous caption
+FIG_TOP_VSPACE_MM = {"fig2": -13, "fig3": -13}
 SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
 
 
@@ -189,7 +191,9 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
             # image in an [H] float (sits right under the previous figure's caption),
             # caption in its own float; the image-only float steps the counter, undo it
             f"\\begin{{figure}}[H]\n"
-            f"{align_block}"
+            + (f"  \\vspace{{{FIG_TOP_VSPACE_MM[fig_name]}mm}}   % pulls the figure up; adjust to taste\n"
+               if fig_name in FIG_TOP_VSPACE_MM else "")
+            + f"{align_block}"
             f"  \\setcounter{{subfigure}}{{0}}\n"
             f"{tikz_block}"
             f"\\end{{figure}}\n"
