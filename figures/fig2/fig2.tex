@@ -7,16 +7,16 @@
 
 \input{figures/fig2/layout.tex}
 
-\begin{figure}[p]
+\begin{figure}[H]
   \centering  % centered
   \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \setcounter{subfigure}{0}
   \makebox[163mm][c]{%  % natural size (no scaling), centered
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
-    \node[anchor=north west] at (0.0mm, -0.0mm) {\includegraphics[width=163.0mm,height=63.3mm]{figures/fig2/panels/fig2_Z.pdf}};  % frame fig2_Z
+    \node[anchor=north west] at (0.0mm, -0.0mm) {\includegraphics[width=163.0mm,height=61.7mm]{figures/fig2/panels/fig2_Z.pdf}};  % frame fig2_Z
 
-    \node[anchor=north west] at (0.0mm, -64.2mm) {\includegraphics[width=163.0mm,height=57.9mm]{figures/fig2/panels/fig2_ZZ.pdf}};  % frame fig2_ZZ
+    \node[anchor=north west] at (0.0mm, -61.7mm) {\includegraphics[width=163.0mm,height=57.9mm]{figures/fig2/panels/fig2_ZZ.pdf}};  % frame fig2_ZZ
 
     \node[anchor=north west] at (\FigIIAX, -\FigIIAY) {%
       \begin{subfigure}[t]{\FigIIAW}%
@@ -127,7 +127,12 @@
       \end{subfigure}};
 
   \end{tikzpicture}}% end makebox
+\end{figure}
 
+\addtocounter{figure}{-1}  % the image-only figure above steps the counter
+
+\begin{figure}[H]
+  \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \caption{\textbf{Patch-leaving behavior is consistent with a Bayesian formulation of the Marginal Value Theorem.}
     (\subref{fig:2-a}) MVT predicts that an optimal forager leaves a patch when the instantaneous marginal reward rate falls below the global average reward rate, set by travel time between patches and within-patch reward statistics.
     (\subref{fig:2-b}) Reward probability at leaving is matched across patch types (ns), while rewards collected and number of reward omissions experienced differed significantly, ruling out simple heuristics such as reward counting or win-stay/loose switch. Lines connect individual animals ($N=24$), Odor 1 (orange) and odor 2 (green) patch types.

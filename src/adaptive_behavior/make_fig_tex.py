@@ -50,6 +50,8 @@ def _extract_caption(tex_path: Path) -> str | None:
 # Figures kept at their natural (pptx) size instead of being scaled to \linewidth
 NATURAL_SIZE_FIGURES = {"fig2"}
 # Figures whose caption sits to the right of the figure instead of below it
+# Figures whose image and caption are separate floats (image first, caption on the next page)
+SPLIT_CAPTION_FIGURES = {"fig2"}
 SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
 
 
@@ -76,15 +78,26 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
     panels.sort(key=lambda p: _panel_letter(p["panel"]))
 
     # Shapes named figN_Z, figN_ZZ, ... are frames drawn in the pptx around groups of
-    # panels: draw them as rectangles, not as lettered panels
+    # panels: not lettered panels. If panels/figN_Z.pdf exists (made in the notebook)
+    # include it as a plain image, otherwise fall back to a plain rectangle
     frame_shapes = [p for p in panels if set(_panel_letter(p["panel"])) == {"Z"}]
     panels = [p for p in panels if p not in frame_shapes]
-    frame_nodes = [
-        f"    \\draw[line width=0.4pt] ({float(p['x_mm']):.1f}mm, {-float(p['y_mm']):.1f}mm) "
-        f"rectangle ({float(p['x_mm']) + float(p['w_mm']):.1f}mm, "
-        f"{-(float(p['y_mm']) + float(p['h_mm'])):.1f}mm);  % frame {p['panel']}"
-        for p in frame_shapes
-    ]
+    frame_nodes = []
+    for p in frame_shapes:
+        x, y = float(p["x_mm"]), float(p["y_mm"])
+        w, h = float(p["w_mm"]), float(p["h_mm"])
+        pdf = fig_dir / "panels" / f"{p['panel']}.pdf"
+        if pdf.exists():
+            frame_nodes.append(
+                f"    \\node[anchor=north west] at ({x:.1f}mm, {-y:.1f}mm) "
+                f"{{\\includegraphics[width={w:.1f}mm,height={h:.1f}mm]{{{fig_dir_tex}/panels/{p['panel']}.pdf}}}};"
+                f"  % frame {p['panel']}"
+            )
+        else:
+            frame_nodes.append(
+                f"    \\draw[line width=0.4pt] ({x:.1f}mm, {-y:.1f}mm) "
+                f"rectangle ({x + w:.1f}mm, {-(y + h):.1f}mm);  % frame {p['panel']}"
+            )
 
     num = _fig_number(fig_name)
     rom = _roman(num)
@@ -172,11 +185,28 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         f"\n"
         f"\\input{{{fig_dir_tex}/layout.tex}}\n"
         f"\n"
-        f"\\begin{{figure}}[p]\n"
-        f"{align_block}"
-        f"  \\setcounter{{subfigure}}{{0}}\n"
-        f"{body}"
-        f"\\end{{figure}}\n"
+        + (
+            # image in an [H] float (sits right under the previous figure's caption),
+            # caption in its own float; the image-only float steps the counter, undo it
+            f"\\begin{{figure}}[H]\n"
+            f"{align_block}"
+            f"  \\setcounter{{subfigure}}{{0}}\n"
+            f"{tikz_block}"
+            f"\\end{{figure}}\n"
+            f"\n"
+            f"\\addtocounter{{figure}}{{-1}}  % the image-only figure above steps the counter\n"
+            f"\n"
+            f"\\begin{{figure}}[H]\n"
+            f"{caption_size}"
+            f"{caption_label}"
+            f"\\end{{figure}}\n"
+            if fig_name in SPLIT_CAPTION_FIGURES else
+            f"\\begin{{figure}}[p]\n"
+            f"{align_block}"
+            f"  \\setcounter{{subfigure}}{{0}}\n"
+            f"{body}"
+            f"\\end{{figure}}\n"
+        )
     )
 
     tex_path.write_text(tex, encoding="utf-8")
