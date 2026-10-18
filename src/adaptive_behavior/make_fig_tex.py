@@ -48,14 +48,14 @@ def _extract_caption(tex_path: Path) -> str | None:
 
 
 # Figures kept at their natural (pptx) size instead of being scaled to \linewidth
-NATURAL_SIZE_FIGURES = {"fig2", "fig3"}  # fig3 = alternative version of fig2 (see main.tex toggle)
+NATURAL_SIZE_FIGURES = {"fig2", "fig3"}  # fig2 = single-image design, fig3 = multi-panel design (see main.tex toggle)
 # Figures whose caption sits to the right of the figure instead of below it
 # Figures whose image and caption are separate floats (image first, caption on the next page)
 SPLIT_CAPTION_FIGURES = {"fig2", "fig3"}
 # Figures whose panels get no automatic bold letter overlay (letters are drawn in the panel itself)
-NO_PANEL_LABEL_FIGURES = {"fig3"}
+NO_PANEL_LABEL_FIGURES = {"fig2"}
 # Letters of panels drawn inside the first panel's image: invisible labels so captions can \subref them
-EXTRA_LABEL_LETTERS = {"fig3": "BCDEFGHIJKLMNOPQR"}
+EXTRA_LABEL_LETTERS = {"fig2": "BCDEFGHIJKLMNOPQR"}
 # Negative space above the image float of a split figure (mm) to pull it up under the previous caption
 FIG_TOP_VSPACE_MM = {"fig2": -13, "fig3": -13}
 SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
