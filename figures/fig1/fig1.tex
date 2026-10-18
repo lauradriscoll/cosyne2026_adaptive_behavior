@@ -9,7 +9,7 @@
 
 \begin{figure}[H]
   \centering
-  \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
+  \captionsetup{font={footnotesize}}
   \setcounter{subfigure}{0}
   \resizebox{\linewidth}{!}{%
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
@@ -140,7 +140,8 @@
 \addtocounter{figure}{-1} % the image-only figure above steps the counter; undo so the caption figure is Figure 1
 \clearpage % Forces the caption block to start at the top of Page 2
 
-\begin{figure}[t]
+\begin{figure}[h]
+  \captionsetup{font=footnotesize}
   \caption{\textbf{Multi-timescale structure of behavior in a virtual patch-foraging task.}
     (\subref{fig:1-a}) Head-fixed mice run on a wheel through a virtual track with odor delivery. Between patches they run; at odor sites they choose to stop and harvest (a tone follows sustained stopping, then probabilistic reward) or run on. Patch types differ in initial reward probability, and depletes with each reward collected.
     (\subref{fig:1-b}) Example patches in session: velocity for every patch visit, with tones, rewards, and patch type (color).
