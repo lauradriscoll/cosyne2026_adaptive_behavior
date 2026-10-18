@@ -52,6 +52,8 @@ NATURAL_SIZE_FIGURES = {"fig2", "fig3"}  # fig3 = alternative version of fig2 (s
 # Figures whose caption sits to the right of the figure instead of below it
 # Figures whose image and caption are separate floats (image first, caption on the next page)
 SPLIT_CAPTION_FIGURES = {"fig2", "fig3"}
+# Figures whose panels get no automatic bold letter overlay (letters are drawn in the panel itself)
+NO_PANEL_LABEL_FIGURES = {"fig3"}
 # Negative space above the image float of a split figure (mm) to pull it up under the previous caption
 FIG_TOP_VSPACE_MM = {"fig2": -13, "fig3": -13}
 SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
@@ -113,10 +115,13 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         prefix = f"Fig{rom}{letter}"  # e.g. FigIIIA
         label  = f"fig:{num}-{letter.lower()}"
 
+        graphic = f"\\panelgraphic[width=\\linewidth]{{{fig_dir_tex}/panels/{name}.pdf}}"
+        if fig_name not in NO_PANEL_LABEL_FIGURES:
+            graphic = f"\\panel{{{letter}}}{{{graphic}}}"   # overlay the bold panel letter
         nodes.append(
             f"    \\node[anchor=north west] at (\\{prefix}X, -\\{prefix}Y) {{%\n"
             f"      \\begin{{subfigure}}[t]{{\\{prefix}W}}%\n"
-            f"        \\panel{{{letter}}}{{\\panelgraphic[width=\\linewidth]{{{fig_dir_tex}/panels/{name}.pdf}}}}%\n"
+            f"        {graphic}%\n"
             f"        \\phantomsubcaption\\label{{{label}}}%\n"
             f"      \\end{{subfigure}}}};"
         )
@@ -141,7 +146,10 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
     if fig_name in NATURAL_SIZE_FIGURES:
         wrap_name = "makebox"
         fig_w_mm = math.ceil(max(float(p["x_mm"]) + float(p["w_mm"]) for p in panels + frame_shapes))
-        open_wrap = f"\\makebox[{fig_w_mm}mm][c]{{%  % natural size (no scaling), centered"
+        # outer box = exactly \linewidth, so a figure wider than the text area is centered
+        # symmetrically (overflowing both margins) instead of only to the right
+        open_wrap = (f"\\makebox[\\linewidth][c]{{\\makebox[{fig_w_mm}mm][c]{{%"
+                     f"  % natural size (no scaling), centered")
         align_block = "  \\centering  % centered\n" + caption_size
     else:
         wrap_name = "resizebox"
@@ -161,7 +169,7 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
         f"\n"
         f"{node_block}\n"
         f"\n"
-        f"  \\end{{tikzpicture}}}}% end {wrap_name}\n"
+        f"  \\end{{tikzpicture}}}}{'}' if wrap_name == 'makebox' else ''}% end {wrap_name}\n"
     )
     caption_label = f"{caption_tex}\n  \\label{{fig:{num}}}\n"
     if side_caption:

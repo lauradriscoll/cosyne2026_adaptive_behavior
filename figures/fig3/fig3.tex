@@ -12,16 +12,16 @@
   \centering  % centered
   \captionsetup{font=footnotesize}  % 10 pt caption (footnotesize at 12 pt base)
   \setcounter{subfigure}{0}
-  \makebox[165mm][c]{%  % natural size (no scaling), centered
+  \makebox[\linewidth][c]{\makebox[202mm][c]{%  % natural size (no scaling), centered
   \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 
     \node[anchor=north west] at (\FigIIIAX, -\FigIIIAY) {%
       \begin{subfigure}[t]{\FigIIIAW}%
-        \panel{A}{\panelgraphic[width=\linewidth]{figures/fig3/panels/fig3_A.pdf}}%
+        \panelgraphic[width=\linewidth]{figures/fig3/panels/fig3_A.pdf}%
         \phantomsubcaption\label{fig:3-a}%
       \end{subfigure}};
 
-  \end{tikzpicture}}% end makebox
+  \end{tikzpicture}}}% end makebox
 \end{figure}
 
 \addtocounter{figure}{-1}  % the image-only figure above steps the counter
