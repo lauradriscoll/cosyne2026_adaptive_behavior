@@ -54,6 +54,8 @@ NATURAL_SIZE_FIGURES = {"fig2", "fig3"}  # fig3 = alternative version of fig2 (s
 SPLIT_CAPTION_FIGURES = {"fig2", "fig3"}
 # Figures whose panels get no automatic bold letter overlay (letters are drawn in the panel itself)
 NO_PANEL_LABEL_FIGURES = {"fig3"}
+# Letters of panels drawn inside the first panel's image: invisible labels so captions can \subref them
+EXTRA_LABEL_LETTERS = {"fig3": "BCDEFGHIJKLMNOPQR"}
 # Negative space above the image float of a split figure (mm) to pull it up under the previous caption
 FIG_TOP_VSPACE_MM = {"fig2": -13, "fig3": -13}
 SIDE_CAPTION_FIGURES = set()  # fig2 now keeps its caption below the wide figure; add a name here for a side caption
@@ -123,7 +125,11 @@ def make_tex(fig_name: str, overwrite: bool = False) -> None:
             f"      \\begin{{subfigure}}[t]{{\\{prefix}W}}%\n"
             f"        {graphic}%\n"
             f"        \\phantomsubcaption\\label{{{label}}}%\n"
-            f"      \\end{{subfigure}}}};"
+            # panels drawn inside this image (not separate shapes): define their labels
+            # too, so \subref{fig:N-x} in the caption resolves to the letter
+            + "".join(f"        \\phantomsubcaption\\label{{fig:{num}-{c.lower()}}}%\n"
+                      for c in EXTRA_LABEL_LETTERS.get(fig_name, "") if letter == "A")
+            + f"      \\end{{subfigure}}}};"
         )
         caption_entries.append(f"    (\\subref{{{label}}}) Placeholder caption for panel {letter}.")
 
